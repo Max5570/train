@@ -115,6 +115,16 @@
                   unityInstance.SetFullscreen(1);
                 };
 
+                const tg = window.Telegram.WebApp;
+                const userId = tg.initDataUnsafe?.user?.id;
+                if (userId) {
+                  unityInstance.SendMessage("GameManager", "SetTelegramId", userId.toString());
+                  console.log("Отправлен Telegram ID:", userId);
+                } else {
+                  console.log("Telegram ID не найден");
+                }
+
+                window.unityInstance = unityInstance;
               }).catch((message) => {
                 alert(message);
               });
@@ -124,17 +134,5 @@
 
     </script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-      window.onload = function () {
-        const tg = window.Telegram.WebApp;
-        const userId = tg.initDataUnsafe?.user?.id;
-
-        if (userId && window.unityInstance) {
-          window.unityInstance.SendMessage("Test", "SetTelegramId", userId.toString());
-        } else {
-          console.log("Telegram ID не найден или Unity ещё не инициализирован");
-        }
-      };
-    </script>
   </body>
 </html>
