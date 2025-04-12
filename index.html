@@ -9,7 +9,7 @@
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=600 height=960 tabindex="-1"></canvas>
+      <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -98,8 +98,8 @@
 
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
-        canvas.style.width = "600px";
-        canvas.style.height = "960px";
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
       }
 
       document.querySelector("#unity-loading-bar").style.display = "block";
@@ -122,6 +122,19 @@
 
       document.body.appendChild(script);
 
+    </script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+      window.onload = function () {
+        const tg = window.Telegram.WebApp;
+        const userId = tg.initDataUnsafe?.user?.id;
+
+        if (userId && window.unityInstance) {
+          window.unityInstance.SendMessage("Test", "SetTelegramId", userId.toString());
+        } else {
+          console.log("Telegram ID не найден или Unity ещё не инициализирован");
+        }
+      };
     </script>
   </body>
 </html>
